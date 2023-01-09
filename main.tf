@@ -16,8 +16,8 @@ module "eks_cluster_and_worker_nodes" {
   eks_cluster_name = var.cluster_name
   eks_cluster_subnet_ids = flatten([module.vpc_for_eks.public_subnet_ids, module.vpc_for_eks.private_subnet_ids])
   # Node group configuration (including autoscaling configurations)
-  pvt_desired_size = 3
-  pvt_max_size = 8
+  pvt_desired_size = 2
+  pvt_max_size = 3
   pvt_min_size = 2
   pblc_desired_size = 1
   pblc_max_size = 2
