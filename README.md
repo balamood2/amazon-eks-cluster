@@ -6,6 +6,7 @@ This repository contains source code to provision an EKS cluster in AWS using Te
 * AWS profile configured with CLI on local machine
 * [Terraform](https://www.terraform.io/)
 * [kubectl](https://kubernetes.io/docs/tasks/tools/)
+* kubegrunt CLI 
 
 ## Project Structure
 
@@ -52,5 +53,6 @@ Review the *main.tf* to update the node size configurations (i.e. desired, maxim
 ## Connect To Cluster
 Using the same AWS account profile that provisioned the infrastructure, you can connect to your cluster by updating your local kube config with the following command:
 `aws eks --region <aws-region> update-kubeconfig --name <cluster-name>`
+
 
 
