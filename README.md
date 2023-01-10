@@ -53,29 +53,4 @@ Review the *main.tf* to update the node size configurations (i.e. desired, maxim
 Using the same AWS account profile that provisioned the infrastructure, you can connect to your cluster by updating your local kube config with the following command:
 `aws eks --region <aws-region> update-kubeconfig --name <cluster-name>`
 
-## Map IAM Users & Roles to EKS Cluster
-If you want to map additional IAM users or roles to your Kubernetes cluster, you will have to update the `aws-auth` *ConfigMap* by adding the respective ARN and a Kubernetes username value to the mapRole or mapUser property as an array item. 
 
-```
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: aws-auth
-  namespace: kube-system
-data:
-  mapRoles: |
-    - rolearn: arn:aws:iam::<account-id>:role/<cluster-name>
-      username: system:node:{{EC2PrivateDNSName}}
-      groups:
-        - system:bootstrappers
-        - system:nodes
-    - rolearn: arn:aws:iam::<account-id>:role/ops-role
-      username: ops-role
-  mapUsers: |
-    - userarn: arn:aws:iam::<account-id>:user/developer-user
-      username: developer-user
-```
-
-When you are done with modifications to the aws-auth ConfigMap, you can run `kubectl apply -f auth-auth.yaml`. An example of this manifest file exists in the raw-manifests directory.
-
-For a more in-depth explanation on this, you can read [this post](https://medium.com/swlh/secure-an-amazon-eks-cluster-with-iam-rbac-b78be0cd95c9).
